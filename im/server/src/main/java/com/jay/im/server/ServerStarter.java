@@ -13,6 +13,8 @@
  */
 package com.jay.im.server;
 
+import com.jay.im.server.context.SpringContextHolder;
+import com.jay.im.server.handler.TopHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -106,6 +108,7 @@ public class ServerStarter {
     }
 
     private void read(SelectionKey key) throws IOException {
+        TopHandler topHandler = SpringContextHolder.getBean("topHandler");
 
         SocketChannel channel = (SocketChannel) key.channel();
         ByteBuffer buffer = ByteBuffer.allocate(1024);
@@ -115,7 +118,7 @@ public class ServerStarter {
             byte[] data = new byte[readBytes];
             bos.write(data, 0, readBytes);
         }
-
+        topHandler.handlerRequest(bos.toByteArray(), channel);
     }
 
     private void accept(SelectionKey key) throws IOException {
