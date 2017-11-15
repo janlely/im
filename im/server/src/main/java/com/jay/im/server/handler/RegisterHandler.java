@@ -4,12 +4,11 @@ import com.jay.im.api.common.ErrorCode;
 import com.jay.im.api.protocol.PExport;
 import com.jay.im.api.protocol.PRegister;
 import com.jay.im.server.dao.mybatis.RegisterMybatis;
-import com.sun.org.apache.bcel.internal.generic.LUSHR;
-import java.io.IOException;
-import java.nio.channels.SocketChannel;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.nio.channels.SocketChannel;
 
 @Service
 public class RegisterHandler extends IHandler{
