@@ -1,8 +1,10 @@
 package com.jay.im.api.protocol;
 
-public class PLogin {
+import java.io.Serializable;
 
-    public static class Request{
+public class PLogin implements Serializable{
+
+    public static class Request implements Serializable{
 
         private String username;
 
@@ -25,7 +27,7 @@ public class PLogin {
         }
     }
 
-    public static class Response{
+    public static class Response implements Serializable{
         private int code;
 
         private String desc;

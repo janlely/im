@@ -85,10 +85,10 @@
 
    	<root>
 		<level value="info" />
-		<!--<appender-ref ref="default-out" />-->
+		<appender-ref ref="default-out" />
         <appender-ref ref="console" />
         <appender-ref ref="debug-out" />
-		<appender-ref ref="info-out" />
+		<!--<appender-ref ref="info-out" />-->
         <appender-ref ref="warn-out" />
         <appender-ref ref="error-out" />
 	</root>

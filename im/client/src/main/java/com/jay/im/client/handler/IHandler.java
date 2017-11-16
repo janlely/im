@@ -44,10 +44,12 @@ public abstract class IHandler {
         while(!unPacker.have(luid) && System.currentTimeMillis() - curTime < 1000){
         }
         if(unPacker.have(luid)){
-            PExport export = deserialize(unPacker.get(luid), PExport.class);
+            PExport export = deserialize(unPacker.fetch(luid), PExport.class);
             T response = deserialize(export.getData(), type);
+            unPacker.rem(luid);
             return response;
         }else{
+            unPacker.rem(luid);
             return null;
         }
     }

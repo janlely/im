@@ -15,8 +15,8 @@ public abstract class IHandler {
     public void handlerRequest(String methodName, byte[] bytes, SocketChannel channel, long luid) throws IOException,
             ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException{
 
-        Method method = this.getClass().getMethod(methodName, byte[].class, SocketChannel.class);
-        method.invoke(bytes, channel, luid);
+        Method method = this.getClass().getMethod(methodName, byte[].class, SocketChannel.class, long.class);
+        method.invoke(this, bytes, channel, luid);
     }
 
     public void writeChannel(byte[] data, SocketChannel channel) throws IOException{

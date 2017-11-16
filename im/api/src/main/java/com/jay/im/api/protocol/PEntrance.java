@@ -1,6 +1,8 @@
 package com.jay.im.api.protocol;
 
-public class PEntrance {
+import java.io.Serializable;
+
+public class PEntrance implements Serializable{
 
     private long luid;
 

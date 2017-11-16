@@ -22,9 +22,9 @@ import java.io.Serializable;
  * @date 17-9-30 下午3:27
  * @version
  */
-public class PRegister {
+public class PRegister implements Serializable {
 
-    public static class RegisterRequest {
+    public static class RegisterRequest implements Serializable{
 
         private String username;
 
@@ -47,7 +47,7 @@ public class PRegister {
         }
     }
 
-    public static class CheckUserRequest{
+    public static class CheckUserRequest implements Serializable{
         private String username;
 
         public String getUsername() {
@@ -58,7 +58,7 @@ public class PRegister {
             this.username = username;
         }
     }
-    public static class Response{
+    public static class Response implements Serializable{
         private int code;
 
         private String desc;

@@ -1,6 +1,8 @@
 package com.jay.im.api.protocol;
 
-public class PExport {
+import java.io.Serializable;
+
+public class PExport implements Serializable{
 
     private long luid;
 

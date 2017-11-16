@@ -56,8 +56,9 @@ public class ClientStarter {
 
         //spring config
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+        context.start();
         LUID.setLuid(System.currentTimeMillis());
-        System.out.println("Client... started");
+        System.out.println("Client Started");
 
         while(true){
             this.selector.select();
@@ -80,7 +81,7 @@ public class ClientStarter {
         }
     }
 
-    private void write(SelectionKey key) throws IOException {
+    private void write(SelectionKey key) throws IOException, ClassNotFoundException {
         TopHandler topHandler = SpringContextHolder.getBean("topHandler");
         SocketChannel channel = (SocketChannel) key.channel();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -91,11 +92,13 @@ public class ClientStarter {
         UnPacker unPacker = SpringContextHolder.getBean("unPacker");
         SocketChannel channel = (SocketChannel) key.channel();
         ByteBuffer buffer = ByteBuffer.allocate(1024);
-        int readBytes = channel.read(buffer);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        while(readBytes != -1){
-            byte[] data = new byte[readBytes];
-            bos.write(data, 0, readBytes);
+        int readBytes = channel.read(buffer);
+        buffer.flip();
+        while(readBytes > 0){
+            bos.write(buffer.array(), 0, readBytes);
+            readBytes = channel.read(buffer);
+            buffer.flip();
         }
 
         unPacker.unpack(bos.toByteArray());

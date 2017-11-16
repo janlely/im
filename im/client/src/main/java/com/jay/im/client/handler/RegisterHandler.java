@@ -9,6 +9,7 @@ import com.jay.im.client.util.LUID;
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
 import java.util.Scanner;
+import java.util.Timer;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,8 +85,9 @@ public class RegisterHandler extends IHandler {
         entrance.setLuid(luid);
         entrance.setData(serizlize(checkUserRequest));
         entrance.setModuleName(ModuleNames.REGISTER);
-        entrance.setModuleName(MethodNames.REGISTER_CHECKUSER);
+        entrance.setMethodName(MethodNames.REGISTER_CHECKUSER);
         writeChannel(serizlize(entrance), channel);
+        unPacker.reg(luid);
         return waitForResponse(luid, PRegister.Response.class, unPacker);
     }
 
