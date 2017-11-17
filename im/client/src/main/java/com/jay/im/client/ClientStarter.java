@@ -1,5 +1,6 @@
 package com.jay.im.client;
 
+import com.jay.im.client.common.CmdStack;
 import com.jay.im.client.context.SpringContextHolder;
 import com.jay.im.client.handler.TopHandler;
 import com.jay.im.client.handler.UnPacker;
@@ -74,6 +75,7 @@ public class ClientStarter {
 
                 else if (key.isReadable()) {
                     this.read(key);
+
                 }else if(key.isWritable()){
                     this.write(key);
                 }
@@ -84,8 +86,9 @@ public class ClientStarter {
     private void write(SelectionKey key) throws IOException, ClassNotFoundException {
         TopHandler topHandler = SpringContextHolder.getBean("topHandler");
         SocketChannel channel = (SocketChannel) key.channel();
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        topHandler.handler(channel);
+        if(!CmdStack.isEmpty()){
+            topHandler.handler(channel);
+        }
     }
 
     private void read(SelectionKey key) throws IOException, ClassNotFoundException {

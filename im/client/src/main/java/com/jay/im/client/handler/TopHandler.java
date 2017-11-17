@@ -1,5 +1,7 @@
 package com.jay.im.client.handler;
 
+import com.jay.im.client.common.CmdStack;
+import com.jay.im.client.common.Command;
 import com.jay.im.client.common.HandlerContainer;
 import com.jay.im.client.context.SpringContextHolder;
 import com.sun.org.apache.xalan.internal.xsltc.dom.MultiValuedNodeHeapIterator;
@@ -26,9 +28,8 @@ public class TopHandler extends IHandler {
 
     @Override
     public void handler(SocketChannel channel) throws IOException, ClassNotFoundException {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter you operation:");
-        String operation = sc.nextLine();
+        Command cmd = CmdStack.pop();
+        String operation = cmd.getName();
         handler(operation, channel);
     }
 
