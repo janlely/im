@@ -69,8 +69,9 @@ public class RegisterHandler extends IHandler {
         registerRequest.setUsername(username);
         registerRequest.setPassword(password1);
         entrance.setData(serizlize(registerRequest));
+        entrance.setModuleName(ModuleNames.REGISTER);
+        entrance.setMethodName(MethodNames.REGISTER_REGISTER);
         writeChannel(serizlize(entrance), channel);
-
         return waitForResponse(luid, PRegister.Response.class, unPacker);
 
     }
@@ -87,7 +88,6 @@ public class RegisterHandler extends IHandler {
         entrance.setModuleName(ModuleNames.REGISTER);
         entrance.setMethodName(MethodNames.REGISTER_CHECKUSER);
         writeChannel(serizlize(entrance), channel);
-        unPacker.reg(luid);
         return waitForResponse(luid, PRegister.Response.class, unPacker);
     }
 

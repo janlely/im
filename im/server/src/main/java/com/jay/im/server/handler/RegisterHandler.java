@@ -37,8 +37,8 @@ public class RegisterHandler extends IHandler{
         writeChannel(serizlize(export), channel);
     }
 
-    public void checkUser(byte[] data, SocketChannel channel, long luid) throws IOException {
-        PRegister.CheckUserRequest checkUserRequest = new PRegister.CheckUserRequest();
+    public void checkUser(byte[] data, SocketChannel channel, long luid) throws IOException, ClassNotFoundException {
+        PRegister.CheckUserRequest checkUserRequest = this.deserialize(data, PRegister.CheckUserRequest.class);
         String username = checkUserRequest.getUsername();
         int userCount = registerMybatis.checkUserName(username);
         PRegister.Response response = new PRegister.Response();

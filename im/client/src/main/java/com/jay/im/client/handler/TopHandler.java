@@ -1,13 +1,13 @@
 package com.jay.im.client.handler;
 
-import com.jay.im.client.common.CmdStack;
+import com.jay.im.client.common.CmdQueue;
 import com.jay.im.client.common.Command;
 import com.jay.im.client.common.HandlerContainer;
+import com.jay.im.client.common.UserInputCapture;
 import com.jay.im.client.context.SpringContextHolder;
-import com.sun.org.apache.xalan.internal.xsltc.dom.MultiValuedNodeHeapIterator;
+
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class TopHandler extends IHandler {
 
     @Override
     public void handler(SocketChannel channel) throws IOException, ClassNotFoundException {
-        Command cmd = CmdStack.pop();
+        Command cmd = CmdQueue.pop();
         String operation = cmd.getName();
         handler(operation, channel);
     }
@@ -42,6 +42,8 @@ public class TopHandler extends IHandler {
                     handler.handler(channel);
                 } catch (Exception e) {
                     LOG.error("error handler operation: {}", operation, e);
+                }finally {
+                    UserInputCapture.start();
                 }
             }
         });

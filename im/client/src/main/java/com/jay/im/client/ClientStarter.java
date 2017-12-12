@@ -1,14 +1,14 @@
 package com.jay.im.client;
 
-import com.jay.im.client.common.CmdStack;
+import com.jay.im.client.common.CmdQueue;
+import com.jay.im.client.common.UserInputCapture;
 import com.jay.im.client.context.SpringContextHolder;
 import com.jay.im.client.handler.TopHandler;
 import com.jay.im.client.handler.UnPacker;
 import com.jay.im.client.util.LUID;
-import java.io.BufferedReader;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -61,6 +61,8 @@ public class ClientStarter {
         LUID.setLuid(System.currentTimeMillis());
         System.out.println("Client Started");
 
+        //start thread to accept user input
+        UserInputCapture.start();
         while(true){
             this.selector.select();
             Iterator<SelectionKey> keys = this.selector.selectedKeys().iterator();
@@ -86,7 +88,7 @@ public class ClientStarter {
     private void write(SelectionKey key) throws IOException, ClassNotFoundException {
         TopHandler topHandler = SpringContextHolder.getBean("topHandler");
         SocketChannel channel = (SocketChannel) key.channel();
-        if(!CmdStack.isEmpty()){
+        if(!CmdQueue.isEmpty()){
             topHandler.handler(channel);
         }
     }

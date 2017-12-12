@@ -1,6 +1,8 @@
 package com.jay.im.client.handler;
 
 import com.jay.im.api.protocol.PExport;
+import com.jay.im.api.protocol.PRegister;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -40,12 +42,12 @@ public abstract class IHandler {
     }
 
     public <T> T waitForResponse(long luid, Class<T> type, UnPacker unPacker) throws IOException, ClassNotFoundException {
+        unPacker.reg(luid);
         long curTime = System.currentTimeMillis();
         while(!unPacker.have(luid) && System.currentTimeMillis() - curTime < 1000){
         }
         if(unPacker.have(luid)){
-            PExport export = deserialize(unPacker.fetch(luid), PExport.class);
-            T response = deserialize(export.getData(), type);
+            T response = deserialize(unPacker.fetch(luid), type);
             unPacker.rem(luid);
             return response;
         }else{

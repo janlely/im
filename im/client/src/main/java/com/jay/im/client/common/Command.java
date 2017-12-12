@@ -4,6 +4,10 @@ public class Command {
 
     private String name;
 
+    public Command(String cmd){
+        this.name = cmd;
+    }
+
     public String getName() {
         return name;
     }
