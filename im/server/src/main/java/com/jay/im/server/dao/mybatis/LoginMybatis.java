@@ -1,5 +1,7 @@
 package com.jay.im.server.dao.mybatis;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface LoginMybatis {
-    String getUserPass(String username);
+    String getUserPass(@Param("username") String username);
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class PLogout implements Serializable{
 
-    public static class Response{
+    public static class Response implements  Serializable{
 
         private int code;
 

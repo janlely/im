@@ -11,11 +11,13 @@ import com.jay.im.client.util.LUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
 import java.util.Scanner;
 
+@Service
 public class LoginHandler extends IHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(LoginHandler.class);
@@ -36,7 +38,7 @@ public class LoginHandler extends IHandler {
             System.out.println(res.getDesc());
             return;
         }
-        LOG.info("login success");
+        System.out.println("login success");
     }
 
     private Response login(String username, String password, SocketChannel channel)

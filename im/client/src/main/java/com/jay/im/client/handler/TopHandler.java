@@ -43,7 +43,7 @@ public class TopHandler extends IHandler {
                 } catch (Exception e) {
                     LOG.error("error handler operation: {}", operation, e);
                 }finally {
-                    UserInputCapture.start();
+                    UserInputCapture.unBlock();
                 }
             }
         });

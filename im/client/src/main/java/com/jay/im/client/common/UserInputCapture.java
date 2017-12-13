@@ -3,25 +3,32 @@ package com.jay.im.client.common;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Scanner;
+import java.util.concurrent.BlockingDeque;
 
 public class UserInputCapture {
 
+    private static volatile boolean blocked = false;
     public static void start(){
         Runnable runnable = new Runnable() {
 
             @Override
             public void run() {
-                Scanner sc = new Scanner(System.in);
-                System.out.println("Enter a commond(try with 'help'): ");
-                String command = sc.nextLine();
-                if(StringUtils.equals("help", command)){
-                    showHelp();
-                }else{
-                    Class aClass = HandlerContainer.getClass(command);
-                    if(aClass == null){
-                        System.out.println("unrecgnized command");
-                    }else{
-                        CmdQueue.push(new Command(command));
+                while (true){
+                    if(!blocked){
+                        Scanner sc = new Scanner(System.in);
+                        System.out.println("Enter a commond(try with 'help'): ");
+                        String command = sc.nextLine();
+                        if(StringUtils.equals("help", command)){
+                            showHelp();
+                        }else{
+                            Class aClass = HandlerContainer.getClass(command);
+                            if(aClass == null){
+                                System.out.println("unrecgnized command");
+                            }else{
+                                blocked = true;
+                                CmdQueue.push(new Command(command));
+                            }
+                        }
                     }
                 }
             }
@@ -35,4 +42,7 @@ public class UserInputCapture {
         System.out.println(" help : show help info");
     }
 
+    public static void unBlock(){
+        blocked = false;
+    }
 }

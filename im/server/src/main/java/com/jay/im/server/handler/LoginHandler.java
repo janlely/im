@@ -21,7 +21,7 @@ public class LoginHandler extends IHandler {
     @Autowired
     private SessionManager sessonManager;
 
-    private void login(byte[] data, SocketChannel channel, long luid) throws IOException, ClassNotFoundException {
+    public void login(byte[] data, SocketChannel channel, long luid) throws IOException, ClassNotFoundException {
         PLogin.Request request = deserialize(data, PLogin.Request.class);
         String username = request.getUsername();
         String password = request.getPassword();
@@ -34,7 +34,7 @@ public class LoginHandler extends IHandler {
             response.setCode(ErrorCode.WRONG_PASSWORD);
             response.setDesc("wrong passowrd!");
         }else{
-            response.setCode(ErrorCode.LOGIN_SUCCESS);
+            response.setCode(ErrorCode.OK);
             response.setDesc("login success!");
         }
         PExport export = new PExport();
